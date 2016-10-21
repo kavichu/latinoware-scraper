@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: latinoware-mongo
+  name: latinoware-mongo
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: latinoware-mongo

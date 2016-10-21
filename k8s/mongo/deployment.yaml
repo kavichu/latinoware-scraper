@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: latinoware-mongo
+  name: latinoware-mongo
+  namespace: latinoware-io
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: latinoware-mongo
+      name: latinoware-mongo
+    spec:
+      containers:
+        - name: latinoware-mongo
+          image: mongo:3.3
+          ports:
+            - name: mongo
+              containerPort: 5432
+          securityContext:
+            privileged: true
+            seLinuxOptions:
+              level: "s0:c123,c456"
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: latinoware-mongo-data-nfs
