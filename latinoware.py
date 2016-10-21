@@ -21,6 +21,14 @@ class JSONEncoder(json.JSONEncoder):
 db = Collections()
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def alive():
+  response = {
+    "status": "alive",
+    "hostname": os.environ["HOSTNAME"]
+  }
+  return jsonify(response)
+
 @app.route('/scraper', methods=['GET'])
 def scraper():
   if db.keynotes.count() == 0 or db.speakers.count() == 0:
