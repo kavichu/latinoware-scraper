@@ -4,11 +4,11 @@ metadata:
   labels:
     app: latinoware-mongo
   name: latinoware-mongo
+  namespace: latinoware-io
 spec:
   type: ClusterIP
   ports:
-    - port: 5432
-      protocol: TCP
-      targetPort: 5432
+    - port: 27017
+      targetPort: 27017
   selector:
     app: latinoware-mongo

@@ -17,16 +17,22 @@ spec:
         - name: latinoware-mongo
           image: mongo:3.3
           ports:
-            - name: mongo
-              containerPort: 5432
+          - name: mongo
+            containerPort: 27017
+            hostPort: 27017
           securityContext:
             privileged: true
             seLinuxOptions:
               level: "s0:c123,c456"
           volumeMounts:
-            - name: mongo-data
+            - name: mongo-persistent-storage
               mountPath: /data/db
       volumes:
-        - name: mongo-data
-          persistentVolumeClaim:
-            claimName: latinoware-mongo-data-nfs
+        - name: mongo-persistent-storage
+          gcePersistentDisk:
+            pdName: gke-latinoware-mongo
+            fsType: ext4
+      # volumes:
+      #   - name: mongo-data
+      #     persistentVolumeClaim:
+      #       claimName: latinoware-mongo-data-nfs
